@@ -1,0 +1,61 @@
+﻿@model List<UserIndexViewModel>
+@{
+    ViewData["Title"] = "User List";
+}
+@using DomainModule.Entity
+<div class="container-fluid">
+
+   
+    <h1 class="h3 mb-2 text-gray-800">@ViewData["Title"]</h1>
+    
+
+   
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a class="btn btn-primary" asp-area="Account" asp-controller="User" asp-action="Create">Add</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Mobile Number</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                   
+                    <tbody>
+                        @foreach(var user in Model)
+                        {
+                            <tr>
+                                <td>@user.Name</td>
+                                <td>@user.EmailAddress</td>
+                                <td>@user.UserName</td>
+                                <td>@user.MobileNumber</td>
+                                <td>@user.Status</td>
+                                <td>
+                                    <a class="btn btn-info" asp-area="Account" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                                    @if(user.Status == DomainModule.Entity.User.StatusActive)
+                                    {
+                                        <a class="btn btn-warning" asp-area="Account" asp-controller="User" asp-action="Deactivate" asp-route-id="@user.Id">Lock</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-success" asp-area="Account" asp-controller="User" asp-action="Activate" asp-route-id="@user.Id">Unlock</a>
+                                    }
+                                       </td>
+                            </tr>
+                        }
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
