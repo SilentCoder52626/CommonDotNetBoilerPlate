@@ -26,6 +26,10 @@ namespace InfrastructureModule.Repository
         {
             return await _context.Set<T>().ToListAsync().ConfigureAwait(false);
         }
+        public IList<T> GetAll()
+        {
+            return _context.Set<T>().ToList();
+        }
 
         public async Task<T?> GetById(long id)
         {
@@ -42,11 +46,20 @@ namespace InfrastructureModule.Repository
             await _context.Set<T>().AddAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task InsertRange(IList<T> entities)
+        public async Task InsertRangeAsync(IList<T> entities)
         {
             await _context.Set<T>().AddRangeAsync(entities).ConfigureAwait(false);
         }
 
+        public void Insert(T entity)
+        {
+            _context.Set<T>().Add(entity);
+        }
+
+        public void InsertRange(IList<T> entities)
+        {
+            _context.Set<T>().AddRange(entities);
+        }
 
         public void Update(T entity)
         {

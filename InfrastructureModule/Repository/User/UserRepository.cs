@@ -21,9 +21,13 @@ namespace InfrastructureModule.Repository
             return await GetQueryable().Where(a => a.Email == email).SingleOrDefaultAsync().ConfigureAwait(false);
         }
 
-        public async Task<User?> GetByIdString(string Id)
+        public async Task<User?> GetByIdStringAsync(string Id)
         {
             return await GetQueryable().Where(a => a.Id == Id).SingleOrDefaultAsync().ConfigureAwait(false);
+        }
+          public User? GetByIdString(string Id)
+        {
+            return GetQueryable().Where(a => a.Id == Id).SingleOrDefault();
         }
 
         public async Task<User?> GetByMobile(string mobile)

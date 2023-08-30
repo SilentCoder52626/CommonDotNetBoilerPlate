@@ -30,6 +30,12 @@ namespace DomainModule.Dto
                         "Create",
                         "Update"
                     }
+                },
+                {
+                    "AuditLog", new List<string>
+                    {
+                        "View",
+                    }
                 }
         };
 

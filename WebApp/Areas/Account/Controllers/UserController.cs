@@ -179,7 +179,7 @@ namespace WebApp.Areas.Account.Controllers
             }
 
         }
-        [Authorize(Policy = "User-Deactivate")]
+        [Authorize(Policy = "User-Lock")]
         public async Task<IActionResult> Deactivate(string id)
         {
             try

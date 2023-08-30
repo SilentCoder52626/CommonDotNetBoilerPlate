@@ -2,9 +2,11 @@
 using DomainModule.BaseRepo;
 using DomainModule.Repository;
 using DomainModule.RepositoryInterface;
+using DomainModule.RepositoryInterface.AuditLog;
 using DomainModule.Service;
 using DomainModule.ServiceInterface;
 using InfrastructureModule.Repository;
+using InfrastructureModule.Repository.AuditLog;
 using ServiceModule.Service;
 using System.Runtime.CompilerServices;
 
@@ -22,6 +24,7 @@ namespace WebApp.DiConfig
         {
          services.AddScoped<UserRepositoryInterface,UserRepository>();
          services.AddScoped<RoleRepositoryInterface,RoleRepository>();
+         services.AddScoped<IAuditLogRepository,AuditLogRepository>();
         }
         private static void UseService(IServiceCollection services)
         {

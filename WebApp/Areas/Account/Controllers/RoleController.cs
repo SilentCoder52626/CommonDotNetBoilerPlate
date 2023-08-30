@@ -81,7 +81,7 @@ namespace WebApp.Areas.Account.Controllers
             }
             return View(model);
         }
-        [Authorize(Policy = "Role-Edit")]
+        [Authorize(Policy = "Role-Update")]
         public async Task<IActionResult> Edit(string id)
         {
             var role = await _roleManager.FindByIdAsync(id).ConfigureAwait(true) ?? throw new RoleNotFoundException();

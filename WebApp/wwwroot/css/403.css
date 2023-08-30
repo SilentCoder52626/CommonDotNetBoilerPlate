@@ -25,7 +25,7 @@ body {
     max-width: 1298px;
     height: auto;
     margin: 2em auto 0 auto;
-    background: transparent url("https://www.dropbox.com/s/qq5n8w99q40wtrg/wood-fence.png?raw=1") no-repeat center top 24em;
+    background: transparent url("../img/wood-fence.png") no-repeat center top 24em;
 }
 
 /* https://www.vecteezy.com/vector-art/237238-dog-family-colored-doodle-drawing */
@@ -35,7 +35,7 @@ body {
     margin: 0 auto;
     padding: 1em 1em;
     text-align: center;
-    background: transparent url("https://www.dropbox.com/s/ft9vhk6720t1k86/dog-family-colored-doodle-drawing.jpg?raw=1") no-repeat top 10em center;
+    background: transparent url("../img/dogs.jpg") no-repeat top 10em center;
 }
 
 h1 {

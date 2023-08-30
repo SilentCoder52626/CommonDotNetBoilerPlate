@@ -12,7 +12,8 @@ namespace DomainModule.RepositoryInterface
     {
         Task<User?> GetByMobile(string mobile);
         Task<User?> GetByEmail(string email);
-        Task<User?> GetByIdString(string Id);
+        Task<User?> GetByIdStringAsync(string Id);
+        User? GetByIdString(string Id);
         Task<User?> GetByUserName(string name);
 
     }

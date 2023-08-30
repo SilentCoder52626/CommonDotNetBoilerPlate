@@ -47,6 +47,7 @@ namespace DomainModule.Service
                             if (!roleClaim.Succeeded) throw new CustomException("Error to Assign Permission");
                         }
                     }
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -75,7 +76,8 @@ namespace DomainModule.Service
                         var roleClaim = await _roleManager.AddClaimAsync(role, new Claim(Permission.PermissionClaimType, permission)).ConfigureAwait(false);
                         if (!roleClaim.Succeeded) throw new CustomException("Error to Assign Permission");
                     }
-                    await tx.CommitAsync();
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
+                    await tx.CommitAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -102,6 +104,7 @@ namespace DomainModule.Service
                     {
                         throw new CustomException(string.Join("</br>", response.Errors.Select(a => a.Description).ToList()));
                     }
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -122,6 +125,7 @@ namespace DomainModule.Service
                     role.Name = dto.Name;
                     var response = await _roleManager.UpdateAsync(role).ConfigureAwait(false);
                     if (!response.Succeeded) throw new CustomException(string.Join("</br>", response.Errors.SelectMany(a => a.Description).ToList()));
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -189,6 +193,7 @@ namespace DomainModule.Service
                         var response = await _roleManager.RemoveClaimAsync(role, claim);
                         if (!response.Succeeded) throw new CustomException("Error to UnAssign Permission");
                     }
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync();
 
                 }
@@ -224,6 +229,7 @@ namespace DomainModule.Service
                             if (!response.Succeeded) throw new CustomException("Error to Assign Permission");
                         }
                     }
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex)

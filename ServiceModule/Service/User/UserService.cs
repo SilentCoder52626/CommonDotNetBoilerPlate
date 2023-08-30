@@ -38,9 +38,9 @@ namespace ServiceModule.Service
             {
                 try
                 {
-                    var user = await _userRepo.GetByIdString(id).ConfigureAwait(false) ?? throw new UserNotFoundException();
+                    var user = await _userRepo.GetByIdStringAsync(id).ConfigureAwait(false) ?? throw new UserNotFoundException();
                     user.Activate();
-                     _userRepo.Update(user);
+                    _userRepo.Update(user);
                     await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync().ConfigureAwait(false);
                 }
@@ -92,6 +92,7 @@ namespace ServiceModule.Service
                         }
                         throw new CustomException(errors);
                     }
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync().ConfigureAwait(false);
                     return userReponseModel;
                 }
@@ -111,7 +112,7 @@ namespace ServiceModule.Service
             {
                 try
                 {
-                    var user = await _userRepo.GetByIdString(id).ConfigureAwait(false) ?? throw new UserNotFoundException();
+                    var user = await _userRepo.GetByIdStringAsync(id).ConfigureAwait(false) ?? throw new UserNotFoundException();
                     user.Deactivate();
                   _userRepo.Update(user);
                     await _unitOfWork.CompleteAsync();
@@ -153,6 +154,7 @@ namespace ServiceModule.Service
                     {
                         throw new CustomException(string.Join("</br>", response.Errors.Select(a => a.Description).ToList()));
                     }
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
                     await tx.CommitAsync().ConfigureAwait(false);
 
                 }

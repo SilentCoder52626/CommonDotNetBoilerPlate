@@ -9,8 +9,9 @@ namespace DomainModule.BaseRepo
    public  interface BaseRepositoryInterface<T> where T : class
     {
         Task<IList<T>> GetAllAsync();
+        IList<T> GetAll();
         Task InsertAsync(T entity);
-        Task InsertRange(IList<T> entities);
+        Task InsertRangeAsync(IList<T> entities);
         void Update(T entity);
         void Delete(T entity);
         IQueryable<T> GetQueryable();

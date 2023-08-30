@@ -29,5 +29,9 @@ namespace InfrastructureModule.Repository
         {
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
+        public void Complete()
+        {
+            _context.SaveChanges();
+        }
     }
 }
