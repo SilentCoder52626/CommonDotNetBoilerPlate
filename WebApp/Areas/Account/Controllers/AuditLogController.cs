@@ -9,14 +9,11 @@ namespace WebApp.Areas.Account.Controllers
     [Area("Account")]
     public class AuditLogController : Controller
     {
-        private readonly ILogger<AuditLogController> _logger;
         private readonly IAuditLogRepository _auditLogRepo;
         private readonly UserRepositoryInterface _userRepo;
-        public AuditLogController(ILogger<AuditLogController> logger,
-            IAuditLogRepository auditLogRepo,
+        public AuditLogController(IAuditLogRepository auditLogRepo,
             UserRepositoryInterface userRepo)
         {
-            _logger = logger;
             _auditLogRepo = auditLogRepo;
             _userRepo = userRepo;
         }

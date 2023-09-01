@@ -12,6 +12,7 @@ using NToastNotify;
 using NToastNotify.Helpers;
 using WebApp.ViewModel;
 using WebApp.Extensions;
+using WebApp.Helper;
 
 namespace WebApp.Areas.Account.Controllers
 {
@@ -23,11 +24,9 @@ namespace WebApp.Areas.Account.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IToastNotification _notify;
         private readonly UserServiceInterface _userService;
-        private readonly ILogger<UserController> _logger;
         public UserController(UserRepositoryInterface userRepository,
             IToastNotification notify,
             UserServiceInterface userService,
-            ILogger<UserController> logger,
             RoleManager<IdentityRole> roleManager,
             UserManager<User> userManager
             )
@@ -35,14 +34,13 @@ namespace WebApp.Areas.Account.Controllers
             _userRepo = userRepository;
             _notify = notify;
             _userService = userService;
-            _logger = logger;
             _roleManager = roleManager;
             _userManager = userManager;
         }
         [Authorize(Policy = "User-View")]
         public async Task<IActionResult> Index()
         {
-            _logger.LogInformation("YO, what is this");
+            CommonLogger.LogInfo("Yo i am here");
             var users = await _userRepo.GetQueryable().Where(a => a.Type != DomainModule.Entity.User.TypeSuperAdmin).ToListAsync().ConfigureAwait(true);
             var userIndexViewModels = new List<UserIndexViewModel>();
             var i = 1;
@@ -226,7 +224,7 @@ namespace WebApp.Areas.Account.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                CommonLogger.LogError(ex.Message, ex);
                 _notify.AddErrorToastMessage(ex.Message);
             }
             return View(model);

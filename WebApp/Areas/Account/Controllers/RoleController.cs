@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NToastNotify;
+using WebApp.Helper;
 using WebApp.ViewModel;
 
 namespace WebApp.Areas.Account.Controllers
@@ -24,17 +25,14 @@ namespace WebApp.Areas.Account.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly RoleServiceInterface _roleService;
-        private readonly ILogger<RoleController> _logger;
         private readonly IToastNotification _notify;
         public RoleController(RoleManager<IdentityRole> roleManager,
           RoleServiceInterface roleService,
-          ILogger<RoleController> logger,
           IToastNotification notify,
           UserManager<User> userManager)
         {
             _roleManager = roleManager;
             _roleService = roleService;
-            _logger = logger;
             _notify = notify;
             _userManager = userManager;
         }
@@ -77,7 +75,7 @@ namespace WebApp.Areas.Account.Controllers
             catch (Exception ex)
             {
                 _notify.AddErrorToastMessage(ex.Message);
-                _logger.LogError(ex, ex.Message);
+                CommonLogger.LogError(ex.Message, ex);
             }
             return View(model);
         }
@@ -105,7 +103,7 @@ namespace WebApp.Areas.Account.Controllers
             {
 
                 _notify.AddErrorToastMessage(ex.Message);
-                _logger.LogError(ex, ex.Message);
+                CommonLogger.LogError(ex.Message, ex);
             }
             return RedirectToAction(nameof(Index));
         }

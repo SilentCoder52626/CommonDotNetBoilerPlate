@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using NToastNotify;
 using WebApp.ViewModel;
 using ServiceModule.Service;
+using WebApp.Helper;
 
 namespace WebApp.Areas.Account.Controllers
 {
@@ -22,18 +23,16 @@ namespace WebApp.Areas.Account.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly ILogger<AccountController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly UserServiceInterface _userService;
         private readonly SignInManager<User> _signInManager;
         private readonly IToastNotification _notify;
-        public AccountController(ILogger<AccountController> logger,
+        public AccountController(
             IToastNotification notify,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
            UserServiceInterface userService)
         {
-            _logger = logger;
             _notify = notify;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -91,7 +90,7 @@ namespace WebApp.Areas.Account.Controllers
             catch (Exception ex)
             {
                 _notify.AddErrorToastMessage(ex.Message);
-                _logger.LogError(ex, ex.Message);
+                CommonLogger.LogError(ex.Message, ex);
 
             }
             return RedirectToAction(nameof(Login));
@@ -169,7 +168,7 @@ namespace WebApp.Areas.Account.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                CommonLogger.LogError(ex.Message, ex);
                 _notify.AddErrorToastMessage(ex.Message);
             }
             
