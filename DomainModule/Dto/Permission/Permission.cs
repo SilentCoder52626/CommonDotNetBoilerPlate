@@ -36,6 +36,12 @@ namespace DomainModule.Dto
                     {
                         "View",
                     }
+                },
+                {
+                    "ActivityLog", new List<string>
+                    {
+                        "View",
+                    }
                 }
         };
 

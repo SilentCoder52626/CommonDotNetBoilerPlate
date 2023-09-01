@@ -2,10 +2,13 @@
 using DomainModule.BaseRepo;
 using DomainModule.Repository;
 using DomainModule.RepositoryInterface;
+using DomainModule.RepositoryInterface.ActivityLog;
 using DomainModule.RepositoryInterface.AuditLog;
 using DomainModule.Service;
 using DomainModule.ServiceInterface;
+using DomainModule.ServiceInterface.Account;
 using InfrastructureModule.Repository;
+using InfrastructureModule.Repository.ActivityLog;
 using InfrastructureModule.Repository.AuditLog;
 using ServiceModule.Service;
 using System.Runtime.CompilerServices;
@@ -25,12 +28,14 @@ namespace WebApp.DiConfig
          services.AddScoped<UserRepositoryInterface,UserRepository>();
          services.AddScoped<RoleRepositoryInterface,RoleRepository>();
          services.AddScoped<IAuditLogRepository,AuditLogRepository>();
+         services.AddScoped<IActivityLogRepository,ActivityLogRepository>();
         }
         private static void UseService(IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserServiceInterface, UserService>();
             services.AddScoped<RoleServiceInterface, RoleService>();
+            services.AddScoped<IActivityLogService, ActivityLogService>();
         }
     }
 }

@@ -1,0 +1,56 @@
+﻿@using WebApp.Areas.Account.ViewModel;
+@model IList<ActivityLogViewModel>
+@{
+    ViewData["Title"] = "Activity Log";
+
+}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Audit Log</h1>
+    <div class="card">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table id="logTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Area</th>
+                            <th>Controller</th>
+                            <th>Action</th>
+                            <th>Action On</th>
+                            <th>PageAccessed</th>
+                            <th>Ip Address</th>
+                            <th>Browser</th>
+                            <th>SessionId</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td> @item.UserName</td>
+                                <td> @item.Area</td>
+                                <td> @item.ControllerName</td>
+                                <td> @item.ActionName</td>
+                                <td> @item.ActionOn</td>
+                                <td> @item.PageAccessed</td>
+                                <td> @item.IpAddress</td>
+                                <td> @item.Browser</td>
+                                <td> @item.SessionId</td>
+                                <td> @item.Status</td>
+                                <td> @item.Data</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $("#logTable").DataTable();
+    </script>
+}

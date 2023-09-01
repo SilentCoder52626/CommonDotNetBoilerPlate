@@ -1,4 +1,5 @@
 ﻿using DomainModule.RepositoryInterface;
+using DomainModule.RepositoryInterface.ActivityLog;
 using DomainModule.RepositoryInterface.AuditLog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

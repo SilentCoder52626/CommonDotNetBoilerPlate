@@ -14,7 +14,7 @@ namespace WebApp.AuthenticationAuthorization
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.SlidingExpiration = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                 options.Cookie.SameSite = SameSiteMode.Lax;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Events.OnRedirectToAccessDenied = (evnt) =>

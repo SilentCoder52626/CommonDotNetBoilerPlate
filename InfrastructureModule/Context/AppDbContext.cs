@@ -26,11 +26,14 @@ namespace InfrastructureModule.Context
             _httpContextAccessor = httpContextAccessor;
         }
         public DbSet<Audit> Audits { get; set; }
+        public DbSet<Activity> ActivityLogs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new UserEntityMapping());
             builder.ApplyConfiguration(new AuditEntityMapping());
+            builder.ApplyConfiguration(new ActivityEntityMapping());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -67,7 +70,7 @@ namespace InfrastructureModule.Context
             var auditDatas = new List<AuditDto>();
             foreach (var entry in ChangeTracker.Entries())
             {
-                if (entry.Entity is Audit || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
+                if (entry.Entity is Audit || entry.Entity is Activity || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
                     continue;
                 var model = new AuditDto(entry);
                 model.TableName = entry.Entity.GetType().Name;
