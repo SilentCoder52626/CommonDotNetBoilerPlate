@@ -10,5 +10,18 @@ namespace WebApp.Controllers
         {
             return View();
         }
+        [Route("Error/Error/{code:int}")]
+        public IActionResult Error(int code)
+        {
+            if (code == 404)
+            {
+                return RedirectToAction(nameof(NotFound));
+            }
+            return View();
+        }
+        public IActionResult NotFound()
+        {
+            return View();
+        }
     }
 }

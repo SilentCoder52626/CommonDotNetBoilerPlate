@@ -1,0 +1,40 @@
+
+/*======================
+    404 page
+=======================*/
+@import url("https://fonts.googleapis.com/css?family=Fira+Code&display=swap");
+
+body * {
+    margin: 0;
+    padding: 0;
+    font-family: "Fira Code", monospace;
+}
+
+.page_404 {
+    background: #fff;
+    font-family: 'Arvo', serif;
+}
+
+.four_zero_four_bg {
+    background-image: url(../img/404-page.gif);
+    height: 530px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: #771616;
+    margin: 20px 0;
+    display: inline-block;
+    text-decoration : none;
+}
+.contant_box_404 p{
+    font-size:20px;
+}
+.contant_box_404 {
+    text-align: center;
+    margin-top: 40px;
+}
