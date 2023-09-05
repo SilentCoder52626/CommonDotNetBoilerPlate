@@ -7,10 +7,12 @@ using DomainModule.RepositoryInterface.AuditLog;
 using DomainModule.Service;
 using DomainModule.ServiceInterface;
 using DomainModule.ServiceInterface.Account;
+using DomainModule.ServiceInterface.Email;
 using InfrastructureModule.Repository;
 using InfrastructureModule.Repository.ActivityLog;
 using InfrastructureModule.Repository.AuditLog;
 using ServiceModule.Service;
+using ServiceModule.Service.Email;
 using System.Runtime.CompilerServices;
 
 
@@ -36,6 +38,7 @@ namespace WebApp.DiConfig
             services.AddScoped<UserServiceInterface, UserService>();
             services.AddScoped<RoleServiceInterface, RoleService>();
             services.AddScoped<IActivityLogService, ActivityLogService>();
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
         }
     }
 }

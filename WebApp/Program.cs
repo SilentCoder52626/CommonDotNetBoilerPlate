@@ -1,6 +1,7 @@
 using DomainModule.Entity;
 using InfrastructureModule.Context;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Newtonsoft.Json;
@@ -70,6 +71,19 @@ builder.Services.AddMvc()
 
 builder.Services.ConfigureAuthentication();
 builder.Services.UseDIConfig();
+
+
+builder.Services.Configure<FormOptions>(o => {
+	o.ValueLengthLimit = int.MaxValue;
+	o.MultipartBodyLengthLimit = int.MaxValue;
+	o.MemoryBufferThreshold = int.MaxValue;
+});
+
+var emailConfig = builder.Configuration
+		.GetSection("EmailConfiguration")
+		.Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+
 builder.Services.AddScoped<ActivityLogFilters>();
 builder.Services.AddSession(options =>
 {
