@@ -91,7 +91,7 @@ namespace WebApp.Areas.Account.Controllers
 				};
 				var userReponse = await _userService.Create(createDto);
 
-				_notify.AddSuccessToastMessage("User created succesfully. Please check your email and confirm your account");
+				_notify.AddSuccessToastMessage("User created succesfully. Please check user email and confirm user account");
 
 				if (userReponse.EmailAddress != null)
 				{
