@@ -91,8 +91,15 @@ namespace WebApp.Areas.Account.Controllers
 				};
 				var userReponse = await _userService.Create(createDto);
 
-				_notify.AddSuccessToastMessage("created succesfully. Please Confirm your account");
-				return RedirectToAction("ConfirmEmailPage", "Account", new { area = "Account", confirmationLink = userReponse.EmailConfirmationLink });
+				_notify.AddSuccessToastMessage("User created succesfully. Please check your email and confirm your account");
+
+				if (userReponse.EmailAddress != null)
+				{
+					var htmlString = $"<p>Dear {userReponse.Name}({userReponse.UserName}),<br/>&emsp;&emsp; Please follow <a href='{userReponse.EmailConfirmationLink}' target='_blank'> this Link</a> to acitvate your account in Common World.<br/><br/>Regards,<br/>CommonWorld</p>";
+					var message = new MessageDto(new string[] { userReponse.EmailAddress }, "Please confirm you account.", htmlString, null);
+					await _emailService.SendEmailAsync(message).ConfigureAwait(true);
+				}
+				return RedirectToAction(nameof(Index));
 			}
 			catch (Exception ex)
 			{

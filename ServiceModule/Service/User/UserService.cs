@@ -67,7 +67,7 @@ namespace ServiceModule.Service
                         PhoneNumber = dto.MobileNumber,
                     };
                     var result = await _userManager.CreateAsync(user, dto.Password).ConfigureAwait(false);
-                    var userReponseModel = new UserResponseDto() { UserId = user.Id };
+                    var userReponseModel = new UserResponseDto() { UserId = user.Id,EmailAddress = user.Email,Name= user.Name,UserName = user.UserName };
                     if (result.Succeeded)
                     {
 
