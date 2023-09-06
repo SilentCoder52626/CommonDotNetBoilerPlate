@@ -45,7 +45,6 @@ namespace WebApp.Areas.Account.Controllers
 		[Authorize(Policy = "User-View")]
 		public async Task<IActionResult> Index()
 		{
-			CommonLogger.LogInfo("Yo i am here");
 			var users = await _userRepo.GetQueryable().Where(a => a.Type != DomainModule.Entity.User.TypeSuperAdmin).ToListAsync().ConfigureAwait(true);
 			var userIndexViewModels = new List<UserIndexViewModel>();
 			var i = 1;

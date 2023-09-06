@@ -39,6 +39,8 @@ namespace WebApp.DiConfig
             services.AddScoped<RoleServiceInterface, RoleService>();
             services.AddScoped<IActivityLogService, ActivityLogService>();
             services.AddScoped<IEmailSenderService, EmailSenderService>();
-        }
-    }
+			services.AddTransient<IJWTTokenGenerator, JWTTokenGenerator>();
+
+		}
+	}
 }

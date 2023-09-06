@@ -26,6 +26,10 @@ namespace WebApp.AuthenticationAuthorization
             // Get all the roles the user belongs to and check if any of the roles has the permission required
             // for the authorization to succeed.
             var user = await _userManager.GetUserAsync(context.User);
+            if(user == null)
+            {
+                return;
+            }
             if (user.IsSuperAdmin)
             {
                 context.Succeed(requirement);
