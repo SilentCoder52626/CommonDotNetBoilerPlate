@@ -13,13 +13,13 @@ namespace WebApp.Areas.API.Controllers
 {
 	[Route("api/account")]
 	[ApiController]
-	public class AccountController : ControllerBase
+	public class AccountaApiController : ControllerBase
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
 		private readonly IJWTTokenGenerator _tokenGenerator;
 		private readonly IConfiguration _configuration;
-		public AccountController(UserManager<User> userManager,
+		public AccountaApiController(UserManager<User> userManager,
 			SignInManager<User> signInManager,
 			IJWTTokenGenerator tokenGenerator,
 			IConfiguration configuration)

@@ -1,4 +1,6 @@
 using DomainModule.Entity;
+using Hangfire;
+using Hangfire.MySql;
 using InfrastructureModule.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +26,26 @@ using WebApp.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 var CustomEmailTokenProposeString = "Email_Token_Provider";
+builder.Services.AddHangfire(configuration => configuration
+			.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+			.UseSimpleAssemblyNameTypeSerializer()
+			.UseRecommendedSerializerSettings()
+			.UseStorage(
+				new MySqlStorage(
+					builder.Configuration.GetConnectionString("DefaultConnection"),
+					new MySqlStorageOptions
+					{
+						QueuePollInterval = TimeSpan.FromSeconds(10),
+						JobExpirationCheckInterval = TimeSpan.FromHours(1),
+						CountersAggregateInterval = TimeSpan.FromMinutes(5),
+						PrepareSchemaIfNecessary = true,
+						DashboardJobListLimit = 25000,
+						TransactionTimeout = TimeSpan.FromMinutes(1),
+						TablesPrefix = "Hangfire",
+					}
+				)
+			));
+builder.Services.AddHangfireServer();
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<AppDbContext>();
@@ -131,6 +153,8 @@ if (!app.Environment.IsDevelopment())
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
+
+app.UseHangfireDashboard("/mydashboard");
 app.UseStatusCodePagesWithReExecute("/Error/Error/{0}");
 
 ServiceActivator.Configure(builder.Services.BuildServiceProvider());
