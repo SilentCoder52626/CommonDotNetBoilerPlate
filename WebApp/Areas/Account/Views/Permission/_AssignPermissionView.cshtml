@@ -1,0 +1,84 @@
+﻿@model PermissionViewModel
+
+<style>
+    .permissionCheckbox {
+        margin-top: -3px !important;
+    }
+
+    .permissionCheckboxSpan {
+        padding-bottom: 1px;
+    }
+</style>
+<section>
+    @Html.HiddenFor(a=>a.RoleId)
+    <h4 class="card-header">Permissions</h4>
+    <div class="card mt-4">
+
+        @foreach (var permission in Model.Permissions)
+        {
+            <div class="card">
+                <div class="card-header">
+
+                    @permission.Module
+
+
+                    <div class="float-right">
+                        @if (permission.IsAssignedAll)
+                        {
+                            <span>
+                                <a class="UnAssingnAllOfModule">
+                                    <input type="checkbox" checked="checked" data-module="@permission.Module" data-key="@permission.Module" class="largeCheckbox" title="Revoke All">
+                                </a>
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                <a class="AssingnAllOfModule">
+                                    <input type="checkbox" data-module="@permission.Module" data-key="@permission.Module" class="largeCheckbox" title="Assign All">
+                                </a>
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <section id="@permission.Module">
+                        <div class="row">
+                            @foreach (var data in permission.PermissionData)
+                            {
+
+                                <div class="col-md-4 col-lg-3" style="margin-bottom: 10px;">
+
+                                    @if (data.IsAssigned)
+                                    {
+                                        <div class="input-group">
+                                            <span class="input-group-addon permissionCheckboxSpan">
+                                                <a class="UnAssignPermission" style="margin-right:3px">
+                                                    <input type="checkbox" checked="checked" data-permission="@permission.Module-@data.Value" class="largeCheckbox permissionCheckbox" title="Revoke">
+                                                </a>
+                                            </span>
+                                            <span>@data.Value</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="input-group">
+                                            <span class="input-group-addon permissionCheckboxSpan">
+                                                <a class="AssignPermission" style="margin-right:3px">
+                                                    <input type="checkbox" data-permission="@permission.Module-@data.Value" class="largeCheckbox permissionCheckbox" title="Assign">
+                                                </a>
+                                            </span>
+                                            <span>@data.Value</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </section>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</section>

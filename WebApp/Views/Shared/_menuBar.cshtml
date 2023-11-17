@@ -1,0 +1,72 @@
+﻿ <!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-area="" asp-controller="Home" asp-action="Index">
+
+        <div class="sidebar-brand-text mx-3">Common World</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Admin
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Admin Settings</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+               
+                <a class="collapse-item" asp-area="Account" asp-controller="User" asp-action="Index">User List</a>
+                <a class="collapse-item" asp-area="Account" asp-controller="Role" asp-action="Index">Role</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLog"
+           aria-expanded="true" aria-controls="headingLog">
+            <i class="fas fa-fw fa-chart"></i>
+            <span>Logs</span>
+        </a>
+        <div id="collapseLog" class="collapse" aria-labelledby="headingLog" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+               
+                <a class="collapse-item" asp-area="Account" asp-controller="AuditLog" asp-action="Index">Audit Log</a>
+                <a class="collapse-item" asp-area="Account" asp-controller="ActivityLog" asp-action="Index">Activity Log</a>
+            </div>
+        </div>
+    </li>
+
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+   
+
+</ul>
+<!-- End of Sidebar -->

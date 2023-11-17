@@ -1,0 +1,52 @@
+﻿@model List<RoleIndexViewModel>
+@{
+    ViewData["Title"] = "Role List";
+}
+<div class="container-fluid">
+
+
+    <h1 class="h3 mb-2 text-gray-800">@ViewData["Title"]</h1>
+
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a class="btn btn-primary" asp-area="Account" asp-controller="Role" asp-action="Create">Add</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
+                    <thead>
+                        <tr>
+                            <th>Name</th>                      
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td>@role.Name</td>
+                               
+                                <td>
+                                    <a class="btn btn-info" asp-area="Account" asp-controller="Role" asp-action="Edit" asp-route-id="@role.Id">Edit</a>
+                                    <a class="btn btn-info" asp-area="Account" asp-controller="Permission" asp-action="Index" asp-route-RoleId="@role.Id">Assign Permission</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script>
+        $("#dataTable").DataTable();
+    </script>
+}

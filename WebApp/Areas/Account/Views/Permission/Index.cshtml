@@ -1,0 +1,291 @@
+﻿@model PermissionViewModel
+
+
+@{
+    ViewData["Title"] = "Assign Permission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles
+    {
+    <style>
+
+        body {
+            font-size: 1rem !important;
+        }
+
+        #scrollToTopBtn {
+            display: inline-block;
+            background-color: #111111;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 5px;
+            right: 20px;
+            transition: background-color .3s, opacity .5s, visibility .5s;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+            #scrollToTopBtn:after {
+                content: "\f077";
+                font-family: FontAwesome;
+                font-weight: normal;
+                font-style: normal;
+                font-size: 2em;
+                line-height: 45px;
+                color: #fff;
+            }
+
+            #scrollToTopBtn:hover {
+                cursor: pointer;
+                background-color: #333;
+                text-decoration: none;
+            }
+
+            #scrollToTopBtn:active {
+                background-color: #555;
+            }
+
+            #scrollToTopBtn.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+
+        .moduleList {
+            display: flex !important;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .moduleTitle {
+            width: 100%;
+        }
+
+        .box-header .box-title {
+            font-size: 1.6rem !important;
+        }
+
+        #PermissionSection {
+            height: calc(100vh - 165px);
+            overflow-y: scroll;
+            overflow-x: hidden;
+            min-height: 600px;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <section class="content-header">
+        <h1>
+            @ViewData["Title"]
+        </h1>
+
+    </section>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box box-solid">
+
+                    <div class="box-body no-padding">
+                        <h4 class="card-header">Navigation</h4>
+                        <ul class="nav nav-pills nav-stacked list-group mt-4" >
+
+                            @foreach (var module in Model.Permissions.OrderBy(a => a.Module))
+                            {
+                                <li class="moduleList list-group-item" style="list-style:none !important">
+                                    <a href="#@module.Module" class="moduleTitle">
+                                        <i class="fas fa-fw fa-arrow-right  "></i> @module.Module
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+            </div>
+
+            <div class="col-md-9" id="PermissionSection">
+                @Html.Partial("~/Areas/Account/Views/Permission/_AssignPermissionView.cshtml",Model)
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+        $(document).on("click", ".AssingnAllOfModule",
+            (e) => {
+                e.preventDefault();
+                let target = e.target;
+                let RoleId = $("#RoleId").val();
+                let Module = $(target).data("module");
+                if (RoleId == 0) {
+                    swal('Error', "Please select a valid role first.");
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AssignAllPermissionOfModule", "Permission")',
+                    data: {
+                        roleId: RoleId,
+                        module: Module,
+                    },
+                    beforeSend: function () {
+                        //$('#loader').show();
+                    },
+                    success: function (res) {
+                        $("#PermissionSection").load('@Url.Action("LoadPermissionView", "Permission")?RoleId=' + RoleId);
+                        //$('#loader').hide();
+                        //notifySuccess(res.data.message);
+                    },
+                    error: function (e) {
+                        //if (e.status === 403) {
+                        //    notifyError("Access Denied");
+                        //} else if (e.status === 500) {
+                        //    notifyError(e.responseText);
+                        //} else {
+                        //    console.log(e);
+                        //    notifyError(e.responseJSON.errors);
+                        //}
+                        //$('#loader').hide();
+                    }
+                });
+
+
+            });
+        $(document).on("click", ".UnAssingnAllOfModule",
+            (e) => {
+                e.preventDefault();
+                let target = e.target;
+                let RoleId = $("#RoleId").val();
+                let Module = $(target).data("module");
+                if (RoleId == 0) {
+                    swal('Error', "Please select a valid role first.");
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UnAssignAllPermissionOfModule", "Permission")',
+                    data: {
+                        roleId: RoleId,
+                        module: Module
+                    },
+                    beforeSend: function () {
+                        //$('#loader').show();
+                    },
+                    success: function (res) {
+                        $("#PermissionSection").load('@Url.Action("LoadPermissionView", "Permission")?RoleId=' + RoleId);
+                        //$('#loader').hide();
+                        //notifySuccess(res.data.message);
+                    },
+                    error: function (e) {
+                        //if (e.status === 403) {
+                        //    notifyError("Access Denied");
+                        //} else if (e.status === 500) {
+                        //    notifyError(e.responseText);
+                        //} else {
+                        //    console.log(e);
+                        //    notifyError(e.responseJSON.errors);
+                        //}
+                        //$('#loader').hide();
+                    }
+                });
+
+
+            });
+
+        $(document).on('click', ".AssignPermission",
+            (e) => {
+                e.preventDefault();
+                let target = e.target;
+                let RoleId = $("#RoleId").val();
+                let Permission = $(target).data("permission");
+                if (!RoleId) {
+                    swal('Error', "Please select a valid role first.");
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AssignPermission", "Permission")',
+                    data: {
+                        roleId: RoleId,
+                        permission: Permission
+                    },
+                    beforeSend: function () {
+                        //$('#loader').show();
+                    },
+                    success: function (res) {
+                        $("#PermissionSection").load('@Url.Action("LoadPermissionView", "Permission")?RoleId=' + RoleId);
+                        //$('#loader').hide();
+                        //notifySuccess(res.data.message);
+                    },
+                    error: function (e) {
+                        console.log(e);
+                        if (e.status === 403) {
+                            //notifyError("Access Denied");
+                        } else if (e.status === 500) {
+                            //notifyError(e.responseText);
+                        } else {
+
+                            //notifyError(e.responseJSON.errors);
+                        }
+                        $('#loader').hide();
+                    }
+                });
+
+            });
+        $(document).on('click', ".UnAssignPermission",
+            (e) => {
+
+                e.preventDefault();
+                let target = e.target;
+                let RoleId = $("#RoleId").val();
+                let Permission = $(target).data("permission");
+                if (RoleId == 0) {
+                    swal('Error', "Please select a valid role first.");
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UnAssignPermission", "Permission")',
+                    data: {
+                        roleId: RoleId,
+                        permission: Permission
+                    },
+                    beforeSend: function () {
+                        $('#loader').show();
+                    },
+                    success: function (res) {
+                        $("#PermissionSection").load('@Url.Action("LoadPermissionView", "Permission")?RoleId=' + RoleId);
+                        //$('#loader').hide();
+                        //notifySuccess(res.data.message);
+                    },
+                    error: function (e) {
+                        console.log(e);
+                        //if (e.status === 403) {
+                        //    notifyError("Access Denied");
+                        //} else if (e.status === 500) {
+                        //    notifyError(e.responseText);
+                        //} else {
+                        //    notifyError(e.responseJSON.errors);
+                        //}
+                        //$('#loader').hide();
+                    }
+                });
+
+
+            });
+
+    </script>
+}
