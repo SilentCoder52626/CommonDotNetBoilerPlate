@@ -73,7 +73,7 @@ namespace ServiceModule.Service
 
                         foreach (var roleId in dto.Roles)
                         {
-                            var role = await _roleManager.FindByIdAsync(roleId).ConfigureAwait(false) ?? throw new RoleNotFoundException();
+                            var role = await _roleManager.FindByNameAsync(roleId).ConfigureAwait(false) ?? throw new RoleNotFoundException();
                             await _userManager.AddToRoleAsync(user, role.Name).ConfigureAwait(false);
                         }
 

@@ -20,7 +20,8 @@ namespace DomainModule.Dto
                         "Create",
                         "Update",
                         "Lock",
-                        "Unlock"
+                        "Unlock",
+                        "ResetPassword"
                     }
                 },
                 {

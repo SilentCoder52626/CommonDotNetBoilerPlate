@@ -170,6 +170,10 @@
         @Html.ValidationMessageFor(a=>a.Password,"",new{@class="text-danger"})
 
         <button type="submit">Log In</button>
+        <br />
+        <br />
+        <p>Don't have an account? <a asp-action="Register" asp-area="Account" asp-controller="Account">Sign Up</a></p>
+
 
     </form>
     <!-- Bootstrap core JavaScript-->

@@ -172,6 +172,36 @@ namespace DomainModule.Service
             }
 
         }
+        public async Task AssignPermissionInBulk(string roleName, List<string> permissions)
+        {
+
+            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    var role = await _roleManager.FindByNameAsync(roleName).ConfigureAwait(false) ?? throw new RoleNotFoundException();
+                    var rolePermissions = await _roleManager.GetClaimsAsync(role).ConfigureAwait(false);
+                    foreach (var permission in permissions)
+                    {
+                        if (!rolePermissions.Any(x =>
+                        x.Type == Permission.PermissionClaimType &&
+                                 x.Value == permission))
+                        {
+                            var roleClaim = await _roleManager.AddClaimAsync(role, new Claim(Permission.PermissionClaimType, permission)).ConfigureAwait(false);
+                            if (!roleClaim.Succeeded) throw new CustomException("Error to Assign Permission");
+                        }
+                    }
+                    await _unitOfWork.CompleteAsync().ConfigureAwait(false);
+                    await tx.CommitAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    await tx.RollbackAsync().ConfigureAwait(false);
+                    throw;
+                }
+            }
+
+        }
 
         public async Task UnAssignPermission(string roleId, string permission)
         {
