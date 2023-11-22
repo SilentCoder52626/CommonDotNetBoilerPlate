@@ -11,11 +11,11 @@ namespace WebApp.Areas.API.Controllers
 {
 	[Route("api/user")]
 	[ApiController]
-	public class UserController : ControllerBase
+	public class UserApiController : ControllerBase
 	{
 		private readonly UserRepositoryInterface _userRepo;
 
-		public UserController(UserRepositoryInterface userRepo)
+		public UserApiController(UserRepositoryInterface userRepo)
 		{
 			_userRepo = userRepo;
 		}

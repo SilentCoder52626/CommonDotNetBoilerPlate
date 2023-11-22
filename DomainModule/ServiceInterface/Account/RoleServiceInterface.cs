@@ -15,5 +15,7 @@ namespace DomainModule.ServiceInterface
         Task UnAssignPermission(string roleId, string permission);
         Task AssignAllPermissionOfModule(string roleId, string module);
         Task UnAssignPermissionOfModule(string roleId, string module);
+        Task AssignPermissionInBulk(string roleName, List<string> permissions);
+
     }
 }
