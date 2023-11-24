@@ -1,0 +1,23 @@
+﻿@model AppSettingModel
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <form method="post" id="setting_form">
+                <div class="row">
+                    @foreach (var data in Model.AppSettings)
+                    {
+                        
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-success" id="save_btn">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -31,6 +31,7 @@ namespace WebApp.DiConfig
          services.AddScoped<RoleRepositoryInterface,RoleRepository>();
          services.AddScoped<IAuditLogRepository,AuditLogRepository>();
          services.AddScoped<IActivityLogRepository,ActivityLogRepository>();
+         services.AddScoped<AppSettingsRepositoryInterface,AppSettingsRepository>();
         }
         private static void UseService(IServiceCollection services)
         {
@@ -40,6 +41,7 @@ namespace WebApp.DiConfig
             services.AddScoped<IActivityLogService, ActivityLogService>();
             services.AddScoped<IEmailSenderService, EmailSenderService>();
 			services.AddTransient<IJWTTokenGenerator, JWTTokenGenerator>();
+            services.AddScoped<AppSettingsServiceInterface, AppSettingsService>();
 
 		}
 	}

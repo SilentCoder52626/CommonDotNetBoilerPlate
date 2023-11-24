@@ -13,5 +13,6 @@ namespace DomainModule.RepositoryInterface
         Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel = IsolationLevel.Unspecified);
         Task<IDbContextTransaction> BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified);
         Task CompleteAsync();
+        Task Complete();
     }
 }
