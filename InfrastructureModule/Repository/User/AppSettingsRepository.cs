@@ -1,4 +1,5 @@
-﻿using DomainModule.Dto.User;
+﻿using DomainModule.Dto;
+using DomainModule.Dto.User;
 using DomainModule.Entity;
 using DomainModule.Enums;
 using DomainModule.RepositoryInterface;

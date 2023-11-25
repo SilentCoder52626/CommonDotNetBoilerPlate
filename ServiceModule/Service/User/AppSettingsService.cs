@@ -1,4 +1,5 @@
-﻿using DomainModule.Dto.User;
+﻿using DomainModule.Dto;
+using DomainModule.Dto.User;
 using DomainModule.Exceptions;
 using DomainModule.RepositoryInterface;
 using DomainModule.ServiceInterface;
@@ -22,33 +23,58 @@ namespace ServiceModule.Service
             _unitOfWork = unitOfWork;
         }
 
+        public void BulkUpdateSetting(List<AppSettingDto> dto)
+        {
+            try
+            {
+                using (var tx = _unitOfWork.BeginTransaction())
+                {
+                    foreach (var data in dto)
+                    {
+                        UpdateSettingModel(data);
+                    }
+                    _unitOfWork.Complete();
+                    tx.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public void UpdateSetting(AppSettingDto dto)
         {
             try
             {
                 using (var tx = _unitOfWork.BeginTransaction())
                 {
-                    var Entity = _settingRepo.GetByKey(dto.Key, dto.UserId);
-                    if(Entity == null)
-                    {
-                        Entity.Key = dto.Key;
-                        Entity.Value = dto.Value;
-                        Entity.UserId = dto.UserId;
-                        _settingRepo.Insert(Entity);
-                    }
-                    else
-                    {
-                        Entity.Value = dto.Value;
-                        Entity.UserId = dto.UserId;
-                        _settingRepo.Update(Entity);
-                    }
-                    
+                    UpdateSettingModel(dto);
                     _unitOfWork.Complete();
+                    tx.Commit();
                 }
             }
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        private void UpdateSettingModel(AppSettingDto dto)
+        {
+            var Entity = _settingRepo.GetByKey(dto.Key, dto.UserId);
+            if (Entity == null)
+            {
+                Entity.Key = dto.Key;
+                Entity.Value = dto.Value;
+                Entity.UserId = dto.UserId;
+                _settingRepo.Insert(Entity);
+            }
+            else
+            {
+                Entity.Value = dto.Value;
+                Entity.UserId = dto.UserId;
+                _settingRepo.Update(Entity);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using DomainModule.BaseRepo;
+using DomainModule.Dto;
 using DomainModule.Dto.User;
 using DomainModule.Entity;
 using System;
