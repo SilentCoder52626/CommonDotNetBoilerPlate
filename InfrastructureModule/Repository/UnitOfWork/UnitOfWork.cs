@@ -23,9 +23,9 @@ namespace InfrastructureModule.Repository
         {
             return await _context.Database.BeginTransactionAsync(isolationLevel);
         }
-        public async Task<IDbContextTransaction> BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
+        public IDbContextTransaction BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
-            return await _context.Database.BeginTransactionAsync(isolationLevel);
+            return _context.Database.BeginTransaction(isolationLevel);
         }
 
         public async Task CompleteAsync()
@@ -36,5 +36,6 @@ namespace InfrastructureModule.Repository
         {
             _context.SaveChanges();
         }
+
     }
 }

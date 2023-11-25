@@ -1,0 +1,110 @@
+﻿@model AppSettingModel
+
+@{
+    var YesNoDropDown = new List<string>()
+    {
+        "Yes",
+        "No"
+    };
+}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <div class="h3 text-gray-800">
+                Settings
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post" id="setting_form">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="setting_table">
+
+                            @if (Model.AppSettings.Any())
+                            {
+                                var i = 1;
+                                foreach (var data in Model.AppSettings)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>
+                                            <input type="hidden" value="@data.UserId" class="UserId" />
+                                            <input type="text" class="form-control Key" readonly value="@data.Key" name="Key" />
+                                        </td>
+                                        <td>
+                                            @Html.DropDownList("Value",new SelectList(YesNoDropDown,data.Value),"--Select--",new {@class="form-control Value drop-down"})
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center">No Available Settings</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-success" id="save_btn">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#save_btn").on("click", function () {
+                event.preventDefault();
+                var data = [];
+                $("#setting_table tr").each(function () {
+                    var item = {
+                        Key: $(this).find(".Key").val(),
+                        Value: $(this).find(".Value").val(),
+                        UserId: $(this).find(".UserId").val()
+                    }
+                    data.push(item);
+                })
+                console.log(data);
+                if (data.length <= 0) {
+                    ShowErrorNotification(error.responseText);
+                    return false;
+                }
+                $.ajax({
+                    method: "POST",
+                    url: "/api/Setting/Update",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        if (response.StatusCode == 200) {
+                            ShowSuccessNotification(response.Message);
+
+                        } else {
+                            ShowErrorNotification(response.Message);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error)
+                        ShowErrorNotification(error.responseText);
+                    }
+
+                })
+            })
+        })
+    </script>
+}

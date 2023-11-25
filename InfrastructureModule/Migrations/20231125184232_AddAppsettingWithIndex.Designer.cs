@@ -3,6 +3,7 @@ using System;
 using InfrastructureModule.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfrastructureModule.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231125184232_AddAppsettingWithIndex")]
+    partial class AddAppsettingWithIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,38 +103,6 @@ namespace InfrastructureModule.Migrations
                     b.ToTable("activity_logs", (string)null);
                 });
 
-            modelBuilder.Entity("DomainModule.Entity.AppSettings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)")
-                        .HasColumnName("key");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("user_id");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)")
-                        .HasColumnName("value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Key", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("appsettings", (string)null);
-                });
-
             modelBuilder.Entity("DomainModule.Entity.Audit", b =>
                 {
                     b.Property<int>("Id")
@@ -149,7 +120,7 @@ namespace InfrastructureModule.Migrations
                     b.Property<DateTime>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 11, 26, 0, 36, 29, 874, DateTimeKind.Local).AddTicks(6931))
+                        .HasDefaultValue(new DateTime(2023, 11, 26, 0, 27, 32, 759, DateTimeKind.Local).AddTicks(7962))
                         .HasColumnName("action_on");
 
                     b.Property<string>("IpAddress")

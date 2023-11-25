@@ -72,6 +72,7 @@
     @RenderBody()
     @await Html.PartialAsync("_ScriptsPartial")
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", false)
 </body>
 

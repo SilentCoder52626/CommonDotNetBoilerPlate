@@ -16,6 +16,8 @@ using WebApp.Helper;
 using DomainModule.ServiceInterface.Email;
 using DomainModule.Dto.Email;
 using System.Security.Cryptography;
+using DomainModule.ServiceInterface.Account;
+using DomainModule.Enums;
 
 namespace WebApp.Areas.Account.Controllers
 {
@@ -28,13 +30,16 @@ namespace WebApp.Areas.Account.Controllers
         private readonly IToastNotification _notify;
         private readonly UserServiceInterface _userService;
         private readonly IEmailSenderService _emailService;
+        private readonly AppSettingsRepositoryInterface _appSettingRepo;
+        private readonly AppSettingsServiceInterface _appSettingService;
         public UserController(UserRepositoryInterface userRepository,
             IToastNotification notify,
             UserServiceInterface userService,
             RoleManager<IdentityRole> roleManager,
-            UserManager<User> userManager
-,
-            IEmailSenderService emailService)
+            UserManager<User> userManager,
+            IEmailSenderService emailService,
+            AppSettingsRepositoryInterface appSettingRepo,
+            AppSettingsServiceInterface appSettingService)
         {
             _userRepo = userRepository;
             _notify = notify;
@@ -42,6 +47,8 @@ namespace WebApp.Areas.Account.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
             _emailService = emailService;
+            _appSettingRepo = appSettingRepo;
+            _appSettingService = appSettingService;
         }
         [Authorize(Policy = "User-View")]
         public async Task<IActionResult> Index()
@@ -72,6 +79,21 @@ namespace WebApp.Areas.Account.Controllers
             var roles = await _roleManager.Roles.Where(a => a.Name != "SuperAdmin").ToListAsync();
             ViewBag.RoleList = new SelectList(roles, "Id", "Name");
             return View();
+        }
+        public IActionResult Settings()
+        {
+            try
+            {
+                var userId = GetCurrentUserExtension.GetCurrentUserId(this);
+                var model = _appSettingRepo.GetAppSettingModel(userId);
+               
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _notify.AddErrorToastMessage(ex.Message);
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Create(UserViewModel model)

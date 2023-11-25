@@ -34,7 +34,7 @@ namespace ServiceModule.Service
         }
         public async Task Activate(string id)
         {
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -57,7 +57,7 @@ namespace ServiceModule.Service
       
         public async Task<UserResponseDto> Create(UserDto dto)
         {
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -108,7 +108,7 @@ namespace ServiceModule.Service
      
         public async Task Deactivate(string id)
         {
-            using(var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using(var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -129,7 +129,7 @@ namespace ServiceModule.Service
 
         public async Task Edit(UserEditDto dto)
         {
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
