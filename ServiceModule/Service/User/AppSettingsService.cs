@@ -1,5 +1,6 @@
 ﻿using DomainModule.Dto;
 using DomainModule.Dto.User;
+using DomainModule.Entity;
 using DomainModule.Exceptions;
 using DomainModule.RepositoryInterface;
 using DomainModule.ServiceInterface;
@@ -65,6 +66,7 @@ namespace ServiceModule.Service
             var Entity = _settingRepo.GetByKey(dto.Key, dto.UserId);
             if (Entity == null)
             {
+                Entity = new AppSettings();
                 Entity.Key = dto.Key;
                 Entity.Value = dto.Value;
                 Entity.UserId = dto.UserId;

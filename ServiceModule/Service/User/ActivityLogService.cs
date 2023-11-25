@@ -24,7 +24,7 @@ namespace ServiceModule.Service
 
         public async Task Create(ActivityLogDto dto)
         {
-            using var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted);
+            using var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadUncommitted);
             try
             {
                 var activityLog = new Activity()

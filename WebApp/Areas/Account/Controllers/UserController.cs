@@ -80,14 +80,14 @@ namespace WebApp.Areas.Account.Controllers
             ViewBag.RoleList = new SelectList(roles, "Id", "Name");
             return View();
         }
-        public IActionResult Setting()
+        public IActionResult Settings()
         {
             try
             {
                 var userId = GetCurrentUserExtension.GetCurrentUserId(this);
                 var model = _appSettingRepo.GetAppSettingModel(userId);
                
-                return model;
+                return View(model);
             }
             catch (Exception ex)
             {

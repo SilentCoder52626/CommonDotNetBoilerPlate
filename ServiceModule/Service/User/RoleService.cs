@@ -31,7 +31,7 @@ namespace DomainModule.Service
         public async Task AssignAllPermissionOfModule(string roleId, string module)
         {
 
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -63,7 +63,7 @@ namespace DomainModule.Service
         public async Task AssignPermission(string roleId, string permission)
         {
 
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -91,7 +91,7 @@ namespace DomainModule.Service
 
         public async Task Create(RoleDto dto)
         {
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -117,7 +117,7 @@ namespace DomainModule.Service
 
         public async Task Edit(RoleEditDto dto)
         {
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -175,7 +175,7 @@ namespace DomainModule.Service
         public async Task AssignPermissionInBulk(string roleName, List<string> permissions)
         {
 
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -205,7 +205,7 @@ namespace DomainModule.Service
 
         public async Task UnAssignPermission(string roleId, string permission)
         {
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
@@ -238,7 +238,7 @@ namespace DomainModule.Service
         public async Task UnAssignPermissionOfModule(string roleId, string module)
         {
 
-            using (var tx = await _unitOfWork.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+            using (var tx = await _unitOfWork.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted))
             {
                 try
                 {
