@@ -45,19 +45,18 @@
 
         .shape:first-child {
             background: linear-gradient( #1845ad, #23a2f6 );
-            left: -80px;
+            left: -100px;
             top: -80px;
         }
 
         .shape:last-child {
             background: linear-gradient( to right, #ff512f, #f09819 );
-            right: -30px;
+            right: -100px;
             bottom: -80px;
         }
-
+        
         form {
-            height: 520px;
-            width: 400px;
+            width:30%;
             background-color: rgba(255,255,255,0.13);
             position: absolute;
             transform: translate(-50%,-50%);
@@ -98,7 +97,7 @@
             width: 100%;
             background-color: rgba(255,255,255,0.07);
             border-radius: 3px;
-            padding: 0 10px;
+            padding: 0 5px;
             margin-top: 8px;
             font-size: 14px;
             font-weight: 300;
@@ -109,7 +108,7 @@
         }
 
         button {
-            margin-top: 50px;
+            margin-top: 30px;
             width: 100%;
             background-color: #ffffff;
             color: #080710;
@@ -147,10 +146,17 @@
                 margin-right: 4px;
             }
 
-        .text-danger span{
-            color:red;
-            font-size:12px;
+        .text-danger span {
+            color: red;
+            font-size: 12px;
         }
+        p{
+            font-size:14px;
+        }
+        p a{
+                color: #7793FF;
+            }
+
     </style>
 </head>
 <body>
@@ -169,10 +175,13 @@
         <input type="password" asp-for="Password" placeholder="Password">
         @Html.ValidationMessageFor(a=>a.Password,"",new{@class="text-danger"})
 
+        <p style="float:right;padding:5px 0;"><a asp-action="ForgetPassword" asp-area="Account" asp-controller="Account">Forget Password?</a> </p>
+
         <button type="submit">Log In</button>
         <br />
         <br />
-        <p>Don't have an account? <a asp-action="Register" asp-area="Account" asp-controller="Account">Sign Up</a></p>
+            <p>Don't have an account? <a asp-action="Register" asp-area="Account" asp-controller="Account">Register</a></p>
+
 
 
     </form>

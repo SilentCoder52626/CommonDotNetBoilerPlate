@@ -255,7 +255,7 @@ namespace WebApp.Areas.Account.Controllers
                     var result = await _userManager.ResetPasswordAsync(user, token, new_password).ConfigureAwait(true);
                     if (result.Succeeded)
                     {
-                        var htmlString = $"<p>Dear {user.Name}({user.UserName}),<br/><br/>&emsp;&emsp; Please use <b>{new_password}</b> as new password to login to your account.  <br/><br/>Regards,<br/>CommonWorld</p>";
+                        var htmlString = $"<p>Dear {user.Name} ({user.UserName}),<br/><br/>\r\n&emsp;&emsp; Welcome back! Your password has been successfully reset. Use <b>{new_password}</b> as your new login key to access your account.\r\n<br/>\r\n&emsp;&emsp; Remember to <b>update</b> your password for added security.\r\n<br/><br/>\r\nRegards,<br/>\r\nCommonWorld\r\n</p>";
                         var message = new MessageDto(new string[] { user.Email }, "User Password Reset.", htmlString, null);
                         await _emailService.SendEmailAsync(message).ConfigureAwait(true);
                     }
