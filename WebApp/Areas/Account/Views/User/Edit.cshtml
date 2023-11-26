@@ -1,6 +1,8 @@
 ﻿@model UserEditViewModel
 @{
     ViewData["Title"] = "User Profile";
+    var IsSuperAdmin = ViewBag.IsSuperAdmin != null ? (bool)ViewBag.IsSuperAdmin : false;
+
 }
 
 <div class="container">
@@ -41,14 +43,23 @@
                                 @Html.TextBoxFor(a=>a.MobileNumber,new{@class="form-control form-control-user required",placeholder="Mobile Number"})
                                 @Html.ValidationMessageFor(a=>a.MobileNumber,"",new{@class="text-danger"})
                             </div>
-                           
-                            <div class="form-group">
-                                <label>Roles *</label>
-                                <label asp-for="Roles" class="control-label"></label>
-                                @Html.ListBoxFor(a=>a.Roles,(SelectList)ViewBag.RoleList,new{@class="form-control Roles",data_val=false})
-                                @Html.ValidationMessageFor(a=>a.Roles,"",new{@class="text-danger"})
 
-                            </div>
+                            @if (IsSuperAdmin)
+                            {
+                                <div class="form-group">
+                                    <label>Roles *</label>
+                                    @Html.ListBoxFor(a=>a.Roles,(SelectList)ViewBag.RoleList,new{@class="form-control Roles",data_val=false})
+                                    @Html.ValidationMessageFor(a=>a.Roles,"",new{@class="text-danger"})
+
+                                </div>
+                            }
+                            else
+                            {
+                                @for (int i = 0; i < Model.Roles.Count; i++)
+                                {
+                                    @Html.HiddenFor(model => model.Roles[i])
+                                }
+                            }
 
                             <button type="submit" class="btn btn-primary">
                                 Update Profile

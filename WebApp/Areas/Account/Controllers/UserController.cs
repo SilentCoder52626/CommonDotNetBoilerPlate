@@ -142,6 +142,9 @@ namespace WebApp.Areas.Account.Controllers
                 var user = await _userManager.FindByIdAsync(id).ConfigureAwait(true) ?? throw new UserNotFoundException();
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = await _roleManager.Roles.Where(a => userRoles.Contains(a.Name)).ToListAsync().ConfigureAwait(true);
+                var CurrentUser = await GetCurrentUserExtension.GetCurrentUser(this);
+                ViewBag.IsSuperAdmin = await _userManager.IsInRoleAsync(CurrentUser, DomainModule.Entity.User.TypeSuperAdmin.ToString());
+
 
                 var userUpdateModel = new UserEditViewModel()
                 {
@@ -179,7 +182,7 @@ namespace WebApp.Areas.Account.Controllers
                 await _userService.Edit(editDto);
 
                 _notify.AddSuccessToastMessage("Updated Successfully.");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), new { id = model.Id });
             }
             catch (Exception ex)
             {

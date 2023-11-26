@@ -2,6 +2,7 @@
 using DomainModule.Entity;
 using DomainModule.Enums;
 using InfrastructureModule.Mapping;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace InfrastructureModule.Context
 {
-    public class AppDbContext:IdentityDbContext
+    public class AppDbContext : IdentityDbContext
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -27,7 +28,7 @@ namespace InfrastructureModule.Context
         }
         public DbSet<Audit> Audits { get; set; }
         public DbSet<Activity> ActivityLogs { get; set; }
-        public DbSet<AppSettings> AppSettings { get; set; }
+        public DbSet<Activity> AppSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -61,61 +62,64 @@ namespace InfrastructureModule.Context
         private void OnBeforeSaveChanges()
         {
             var userId = "";
-            if (_httpContextAccessor.HttpContext.User.Claims.Count() > 0)
+            if (_httpContextAccessor.HttpContext != null)
             {
-                userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            }
-            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            var browser = _httpContextAccessor.HttpContext.Request.Headers["user-agent"].ToString();
-            ChangeTracker.DetectChanges();
-            var auditDatas = new List<AuditDto>();
-            foreach (var entry in ChangeTracker.Entries())
-            {
-                if (entry.Entity is Audit || entry.Entity is Activity || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
-                    continue;
-                var model = new AuditDto(entry);
-                model.TableName = entry.Entity.GetType().Name;
-                model.UserId = userId;
-                model.IpAddress = ipAddress;
-                model.Browser = browser;
-                auditDatas.Add(model);
-                foreach (var prop in entry.Properties)
+                if (_httpContextAccessor.HttpContext.User.Claims.Count() > 0)
                 {
-                    var propertyName = prop.Metadata.Name;
-                    if (prop.Metadata.IsPrimaryKey())
-                    {
-                        model.KeyValues[propertyName] = prop.CurrentValue;
-                        continue;
-                    }
-                    switch (entry.State)
-                    {
-                        case EntityState.Added:
-                            model.AuditType = AuditType.Create;
-                            model.NewValues[propertyName] = prop.CurrentValue;
-                            break;
-                        case EntityState.Deleted:
-                            model.AuditType = AuditType.Delete;
-                            model.OldValues[propertyName] = prop.OriginalValue;
-                            break;
-                        case EntityState.Modified:
-                            if (prop.IsModified)
-                            {
-                                model.AuditType = AuditType.Update;
-                                model.NewValues[propertyName] = prop.CurrentValue;
-                                model.OldValues[propertyName] = prop.OriginalValue;
-                                model.ChangedColumns.Add(propertyName);
-                            }
-                            break;
-                    }
+                    userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 }
-            }
-            foreach (var auditEntry in auditDatas)
-            {
-                Audits.Add(auditEntry.ToAudit());
+                var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                var browser = _httpContextAccessor.HttpContext.Request.Headers["user-agent"].ToString();
+                ChangeTracker.DetectChanges();
+                var auditDatas = new List<AuditDto>();
+                foreach (var entry in ChangeTracker.Entries())
+                {
+                    if (entry.Entity is Audit || entry.Entity is Activity || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
+                        continue;
+                    var model = new AuditDto(entry);
+                    model.TableName = entry.Entity.GetType().Name;
+                    model.UserId = userId;
+                    model.IpAddress = ipAddress;
+                    model.Browser = browser;
+                    auditDatas.Add(model);
+                    foreach (var prop in entry.Properties)
+                    {
+                        var propertyName = prop.Metadata.Name;
+                        if (prop.Metadata.IsPrimaryKey())
+                        {
+                            model.KeyValues[propertyName] = prop.CurrentValue;
+                            continue;
+                        }
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                model.AuditType = AuditType.Create;
+                                model.NewValues[propertyName] = prop.CurrentValue;
+                                break;
+                            case EntityState.Deleted:
+                                model.AuditType = AuditType.Delete;
+                                model.OldValues[propertyName] = prop.OriginalValue;
+                                break;
+                            case EntityState.Modified:
+                                if (prop.IsModified)
+                                {
+                                    model.AuditType = AuditType.Update;
+                                    model.NewValues[propertyName] = prop.CurrentValue;
+                                    model.OldValues[propertyName] = prop.OriginalValue;
+                                    model.ChangedColumns.Add(propertyName);
+                                }
+                                break;
+                        }
+
+                    }
+                }
+                foreach (var auditEntry in auditDatas)
+                {
+                    Audits.Add(auditEntry.ToAudit());
+                }
             }
         }
-        
+
     }
 }
