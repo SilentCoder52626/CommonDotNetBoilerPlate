@@ -16,6 +16,9 @@ using NToastNotify;
 using WebApp.ViewModel;
 using ServiceModule.Service;
 using WebApp.Helper;
+using DomainModule.Dto.Email;
+using NETCore.MailKit.Core;
+using DomainModule.ServiceInterface.Email;
 
 namespace WebApp.Areas.Account.Controllers
 {
@@ -27,19 +30,22 @@ namespace WebApp.Areas.Account.Controllers
 		private readonly UserServiceInterface _userService;
 		private readonly SignInManager<User> _signInManager;
 		private readonly IToastNotification _notify;
-		public AccountController(
-			IToastNotification notify,
-			UserManager<User> userManager,
-			SignInManager<User> signInManager,
-		   UserServiceInterface userService)
-		{
-			_notify = notify;
-			_userManager = userManager;
-			_signInManager = signInManager;
-			_userService = userService;
-		}
+		private readonly IEmailSenderService _emailService;
+        public AccountController(
+            IToastNotification notify,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+           UserServiceInterface userService,
+           IEmailSenderService emailService)
+        {
+            _notify = notify;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _userService = userService;
+            _emailService = emailService;
+        }
 
-		public async Task<IActionResult> Login(string ReturnUrl = "/Home/Index")
+        public async Task<IActionResult> Login(string ReturnUrl = "/Home/Index")
 		{
 			var loginModel = new LoginViewModel()
 			{
@@ -95,7 +101,53 @@ namespace WebApp.Areas.Account.Controllers
 			}
 			return RedirectToAction(nameof(Login));
 		}
-        public async Task<IActionResult> Register(string ReturnUrl = "/Home/Index")
+        public async Task<IActionResult> ForgetPassword()
+        {
+            var model = new ForgetPasswordModel()
+            {
+
+            };
+
+            return View(model);
+        }
+		[HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordModel model)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email) ?? throw new CustomException("Uh-oh! The email address seems to be lost in the digital abyss. Double-check and make sure it's a valid email.");
+
+                if (user.Email != null)
+                {
+                    string new_password = RandomAlphaNumericHelper.Random(8);
+
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var result = await _userManager.ResetPasswordAsync(user, token, new_password).ConfigureAwait(true);
+                    if (result.Succeeded)
+                    {
+                        var htmlString = $"<p>Dear {user.Name} ({user.UserName}),<br/><br/>\r\n&emsp;&emsp; Welcome back! Your password has been successfully reset. Use <b>{new_password}</b> as your new login key to access your account.\r\n<br/>\r\n&emsp;&emsp; Remember to <b>update</b> your password for added security.\r\n<br/><br/>\r\nRegards,<br/>\r\nCommonWorld\r\n</p>";
+                        var message = new MessageDto(new string[] { user.Email }, "User Password Reset.", htmlString, null);
+                        await _emailService.SendEmailAsync(message).ConfigureAwait(true);
+                    }
+                }
+                else
+                {
+                    throw new CustomException("Email address of the user is invalid.");
+                }
+                _notify.AddSuccessToastMessage("Password Reset Email Send Succussfully.");
+                return RedirectToAction(nameof(Login));
+
+            }
+            catch (Exception ex)
+            {
+                CommonLogger.LogError(ex.Message, ex);
+                _notify.AddErrorToastMessage(ex.Message);
+                return View(model);
+
+            }
+
+        }
+        public async Task<IActionResult> Register()
         {
             var userModel = new UserViewModel()
             {

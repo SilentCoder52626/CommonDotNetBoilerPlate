@@ -4,7 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace WebApp.ViewModel
 {
-
+    public class ForgetPasswordModel
+    {
+        [Required(ErrorMessage = "Email is required")]
+        public string Email { get; set; }
+    }
     public class UserIndexViewModel
     {
         public int SN { get; set; }
