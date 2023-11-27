@@ -32,25 +32,25 @@ namespace DomainModule.Entity
             Type = type;
             Status = StatusActive;
         }
-        public void Update(string name,string userName,string email,string phoneNumber)
+        public virtual void Update(string name,string userName,string email,string phoneNumber)
         {
             Name = name;
             UserName = userName;
             Email = email;
             PhoneNumber = phoneNumber;
         }
-        public string Name { get; set; }
-        public DateTime CreatedOn { get; protected set; }
-        public string Status { get; protected set; }
-        public string Type { get; set; }
-        public bool IsActive => Status == StatusActive;
-        public bool IsSuperAdmin => Type == TypeSuperAdmin;
-        public void Activate()
+        public virtual string Name { get; set; }
+        public virtual DateTime CreatedOn { get; protected set; }
+        public virtual string Status { get; protected set; }
+        public virtual string Type { get; set; }
+        public virtual bool IsActive => Status == StatusActive;
+        public virtual bool IsSuperAdmin => Type == TypeSuperAdmin;
+        public virtual void Activate()
         {
             Status = StatusActive;
             LockoutEnd = DateTime.Now.AddDays(-1);
         }
-        public void Deactivate()
+        public virtual void Deactivate()
         {
             Status = StatusInactive;
             LockoutEnabled = true;

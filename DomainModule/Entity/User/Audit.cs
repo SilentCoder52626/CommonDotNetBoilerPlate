@@ -8,16 +8,16 @@ namespace DomainModule.Entity
 {
     public class Audit
     {
-        public int Id { get; set; }
-        public string? IpAddress { get; set; }
-        public string? Browser { get; set; }
-        public string? UserId { get; set; }
-        public string? Type { get; set; }
-        public string? TableName { get; set; }
-        public DateTime DateTime { get; set; }
-        public string? OldValues { get; set; }
-        public string? NewValues { get; set; }
-        public string? AffectedColumns { get; set; }
-        public string? PrimaryKey { get; set; }
-    }
+        public virtual int Id { get; set; }
+        public virtual string? IpAddress { get; set; }
+        public virtual string? Browser { get; set; }
+        public virtual string? UserId { get; set; }
+        public virtual string? Type { get; set; }
+        public virtual string? TableName { get; set; }
+        public virtual DateTime DateTime { get; set; }
+        public virtual string? OldValues { get; set; }
+        public virtual string? NewValues { get; set; }
+        public virtual string? AffectedColumns { get; set; }
+        public virtual string? PrimaryKey { get; set; }
+    }          
 }

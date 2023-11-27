@@ -8,10 +8,10 @@ namespace DomainModule.Entity
 {
 	public class EmailConfiguration
 	{
-		public string? From { get; set; }
-		public string? SmtpServer { get; set; }
-		public int Port { get; set; }
-		public string? UserName { get; set; }
-		public string? Password { get; set; }
+		public virtual string? From { get; set; }
+		public virtual string? SmtpServer { get; set; }
+		public virtual int Port { get; set; }
+		public virtual string? UserName { get; set; }
+		public virtual string? Password { get; set; }
 	}
 }
