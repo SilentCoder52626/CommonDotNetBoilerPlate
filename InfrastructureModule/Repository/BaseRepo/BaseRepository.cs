@@ -40,6 +40,10 @@ namespace InfrastructureModule.Repository
         {
             return _context.Set<T>().Find(id);
         }
+        public T? GetById(int id)
+        {
+            return _context.Set<T>().Find(id);
+        }
 
         public IQueryable<T> GetQueryable()
         {

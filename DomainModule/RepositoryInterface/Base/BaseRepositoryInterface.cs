@@ -19,5 +19,6 @@ namespace DomainModule.BaseRepo
         IQueryable<T> GetQueryable();
         Task<T?> GetByIdAsync(long id);
         T? GetById(long id);
+        T? GetById(int id);
     }
 }
