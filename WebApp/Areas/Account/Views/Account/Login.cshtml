@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!--Stylesheet-->
-    <style media="screen">
+    <style>
         *,
         *:before,
         *:after {
@@ -28,78 +28,78 @@
         }
 
         .background {
-            width: 430px;
-            height: 520px;
+            width: 26.875rem; /* 430px to rem */
+            height: 32.5rem; /* 520px to rem */
             position: absolute;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             left: 50%;
             top: 50%;
         }
 
             .background .shape {
-                height: 200px;
-                width: 200px;
+                height: 12.5rem; /* 200px to rem */
+                width: 12.5rem; /* 200px to rem */
                 position: absolute;
                 border-radius: 50%;
             }
 
         .shape:first-child {
-            background: linear-gradient( #1845ad, #23a2f6 );
-            left: -100px;
-            top: -80px;
+            background: linear-gradient(#1845ad, #23a2f6);
+            left: -6.25rem; /* 100px to rem */
+            top: -5rem; /* 80px to rem */
         }
 
         .shape:last-child {
-            background: linear-gradient( to right, #ff512f, #f09819 );
-            right: -100px;
-            bottom: -80px;
+            background: linear-gradient(to right, #ff512f, #f09819);
+            right: -6.25rem; /* 100px to rem */
+            bottom: -5rem; /* 80px to rem */
         }
-        
+
         form {
-            width:30%;
-            background-color: rgba(255,255,255,0.13);
+            width: 30%; /* You might want to consider changing this to a responsive unit like vw */
+            background-color: rgba(255, 255, 255, 0.13);
             position: absolute;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             top: 50%;
             left: 50%;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.1);
-            box-shadow: 0 0 40px rgba(8,7,16,0.6);
-            padding: 50px 35px;
+            border-radius: 1.875rem; /* 30px to rem */
+            backdrop-filter: blur(0.625rem); /* 10px to rem */
+            border: 0.125rem solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 2.5rem rgba(8, 7, 16, 0.6); /* 40px to rem */
+            padding: 3.125rem 2.188rem; /* 50px 35px to rem */
         }
 
             form * {
-                font-family: 'Poppins',sans-serif;
+                font-family: 'Poppins', sans-serif;
                 color: #ffffff;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.03125rem; /* 0.5px to rem */
                 outline: none;
                 border: none;
             }
 
             form h3 {
-                font-size: 32px;
+                font-size: 2rem; /* 32px to rem */
                 font-weight: 500;
-                line-height: 42px;
+                line-height: 2.625rem; /* 42px to rem */
                 text-align: center;
             }
 
         label {
             display: block;
-            margin-top: 30px;
-            font-size: 16px;
+            margin-top: 1.875rem; /* 30px to rem */
+            font-size: 1rem; /* 16px to rem */
             font-weight: 500;
         }
 
         input {
             display: block;
-            height: 50px;
+            height: 3.125rem; /* 50px to rem */
             width: 100%;
-            background-color: rgba(255,255,255,0.07);
-            border-radius: 3px;
-            padding: 0 5px;
-            margin-top: 8px;
-            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 0.1875rem; /* 3px to rem */
+            padding: 0 0.3125rem; /* 5px to rem */
+            margin-top: 0.5rem; /* 8px to rem */
+            font-size: 0.875rem; /* 14px to rem */
             font-weight: 300;
         }
 
@@ -108,56 +108,58 @@
         }
 
         button {
-            margin-top: 30px;
+            margin-top: 1.875rem; /* 30px to rem */
             width: 100%;
             background-color: #ffffff;
             color: #080710;
-            padding: 15px 0;
-            font-size: 18px;
+            padding: 0.9375rem 0; /* 15px to rem */
+            font-size: 1.125rem; /* 18px to rem */
             font-weight: 600;
-            border-radius: 5px;
+            border-radius: 0.3125rem; /* 5px to rem */
             cursor: pointer;
         }
 
         .social {
-            margin-top: 30px;
+            margin-top: 1.875rem; /* 30px to rem */
             display: flex;
         }
 
             .social div {
                 background: red;
-                width: 150px;
-                border-radius: 3px;
-                padding: 5px 10px 10px 5px;
-                background-color: rgba(255,255,255,0.27);
+                width: 9.375rem; /* 150px to rem */
+                border-radius: 0.1875rem; /* 3px to rem */
+                padding: 0.3125rem 0.625rem 1rem 0.3125rem; /* 5px 10px 10px 5px to rem */
+                background-color: rgba(255, 255, 255, 0.27);
                 color: #eaf0fb;
                 text-align: center;
             }
 
                 .social div:hover {
-                    background-color: rgba(255,255,255,0.47);
+                    background-color: rgba(255, 255, 255, 0.47);
                 }
 
             .social .fb {
-                margin-left: 25px;
+                margin-left: 1.5625rem; /* 25px to rem */
             }
 
             .social i {
-                margin-right: 4px;
+                margin-right: 0.25rem; /* 4px to rem */
             }
 
         .text-danger span {
             color: red;
-            font-size: 12px;
+            font-size: 0.75rem; /* 12px to rem */
         }
-        p{
-            font-size:14px;
+
+        p {
+            font-size: 0.875rem; /* 14px to rem */
         }
-        p a{
+
+            p a {
                 color: #7793FF;
             }
-
     </style>
+
 </head>
 <body>
     <div class="background">
@@ -168,19 +170,19 @@
         <h3>Common World</h3>
         <label for="Email">Email</label>
         <input type="email" asp-for="Email" placeholder="Enter Email Address...">
-        @Html.ValidationMessageFor(a=>a.Email,"",new{@class="text-danger"})
+        @Html.ValidationMessageFor(a => a.Email, "", new { @class = "text-danger" })
 
 
         <label for="password">Password</label>
         <input type="password" asp-for="Password" placeholder="Password">
-        @Html.ValidationMessageFor(a=>a.Password,"",new{@class="text-danger"})
+        @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
 
         <p style="float:right;padding:5px 0;"><a asp-action="ForgetPassword" asp-area="Account" asp-controller="Account">Forget Password?</a> </p>
 
         <button type="submit">Log In</button>
         <br />
         <br />
-            <p>Don't have an account? <a asp-action="Register" asp-area="Account" asp-controller="Account">Register</a></p>
+        <p>Don't have an account? <a asp-action="Register" asp-area="Account" asp-controller="Account">Register</a></p>
 
 
 
